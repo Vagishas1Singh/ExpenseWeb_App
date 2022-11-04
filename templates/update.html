@@ -20,10 +20,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/60cade9c39.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/60cade9c39.js" crossorigin="anonymous"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167277466-1"></script>
     <script>
@@ -33,18 +34,13 @@
 
         gtag('config', 'UA-167277466-1');
     </script>
-    <script type="text/javascript">
-        function preventBack(){window.history.forward()};
-        setTimeout("preventBack()"),0;
-            window.onunload=function(){null;}
-    </script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
 
     <title>ExpenseWala:
-Home
+Edit
 </title>
 
 </head>
@@ -70,10 +66,7 @@ Home
                     <a class="nav-link" href="/budgets"><i class="fas fa-piggy-bank"></i> Budgets</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/categories"><i class="fas fa-funnel-dollar"></i> Spend Categories</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('.reports')}}"><i class="fas fa-table"></i> Reports</a>
+                    <a class="nav-link" href="/reports"><i class="fas fa-table"></i> Reports</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -88,34 +81,24 @@ Home
 
     <main class="container p-5 text-center">
 
-<h1>Dashboard</h1>
+<h1>Edit Expense</h1>
 
 <!-- Begin Quick Expense -->
-<button type="button" class="btn btn-outline-primary btn-block btn-lg" data-toggle="modal"
-    data-target="#quickExpenseModal" style="font-weight:bold;font-size:30px;color:black;">💰 Add Expense 💰</button>
 
-<div class="modal fade" id="quickExpenseModal" tabindex="-1" role="dialog" aria-labelledby="quickExpenseModalLabel"
-    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="quickExpenseModalLabel">Add Expense</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div class="modal-body">
-                <form action="/adddataindb" id="quickExpense" method="post" autocomplete="off">
+                {% for i in data %}
+                <form action="/addupdatedata/{{i.id}}" id="quickExpense" method="post" autocomplete="off">
                     <input type="hidden" name="csrf_token" value="IjUxN2Y2OTlmYmE3NGM3ZmQzODhiNTAzMDQyZjU1ODIxY2NlMzNhYzIi.Y1VRIQ.kIV3q7ukeVM6q6E5MbB56BgTzL8" />
                     <div class="form-group">
                         <label for="description" class="col-form-label">Description:</label>
-                        <input type="text" class="form-control" name="description" id="description" value=""
+                        <input type="text" class="form-control" name="description" id="description" value="{{i.description}}"
                             form="quickExpense" maxlength="200" required>
                     </div>
                     <div class="form-group">
                         <label for="category" class="col-form-label">Category:</label>
-                        <select id="category" class="form-control-sm" name="category" form="quickExpense" required>
-                            <option value="None">None</option>
+                        <select id="category" class="form-control-sm" name="category" value="{{i.category}}"  form="quickExpense" required>
 
                             <option value="Groceries">Groceries</option>
 
@@ -137,113 +120,35 @@ Home
                     </div>
                     <div class="form-group">
                         <label for="date" class="col-form-label">Date:</label>
-                        <input type="date" class="form-control" name="date" id="date" value=""
+                        <input type="date" class="form-control" name="date" id="date" value="{{i.expense_date}}"
                             form="quickExpense" required>
                     </div>
                     <div class="form-group">
                         <label for="payer" class="col-form-label">Payer:</label>
-                        <select id="payer" class="form-control-sm" name="payer" form="quickExpense"  required>
-                            <option value="Groceries">None</option>
-                            <option value="Self" >Self</option>
+                        <select id="payer" class="form-control-sm" name="payer" value="{{i.payer}}" form="quickExpense" required>
+                            <option value="Self">Self</option>
                             <option value="Other">Other</option>
+
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="amount" class="col-form-label">Amount:</label>
-                        <input type="text" class="form-control-sm" name="amount" id="amount" value="" size="10"
+                        <input type="text" class="form-control-sm" name="amount" id="amount" value="{{i.amount}}" size="10"
                             placeholder="$" required maxlength="10"
                             pattern="(?=.*?\d)^(([1-9]\d{0,2}(\d{3})*)|\d+)?(\.\d{1,2})?$"
                             title="Format must be currency value without dollar sign or commas e.g. 1, 2.50, 1500.75"
                             form="quickExpense" required>
                     </div>
                 </form>
+                 {% endfor %}
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success" form="quickExpense">Save Expense</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="/fulltable" type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
             </div>
         </div>
     </div>
-</div>
- <br>
-<div class="container">
-    <!-- Begin Your Expenses -->
-    <div class="row">
-        <div class="col-12">
-            <h2 style="text-align:left">Your Expenses</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
-                <div class="card-header"><strong>Remaining Income</strong></div>
-                <div class="card-body">
-                        <h4 class="card-title">{{60000-ex}}</h4>
 
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card text-white bg-warning mb-3" style="max-width: 20rem;">
-                <div class="card-header"><strong>Expenses</strong></div>
-                <div class="card-body">
-                    <h4 class="card-title">{{ex}}</h4>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-                <div class="card-header"><strong>Monthly Expenses</strong></div>
-                <div class="card-body">
-                    <h4 class="card-title">{{ex_monthly}}</h4>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-            <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
-                <div class="card-header"><strong>Weekly Expenses</strong></div>
-                <div class="card-body">
-                    <h4 class="card-title">{{ex_weekly}}</h4>
-                </div>
-            </div>
-        </div>
-    </div>
- <br>
-    <div class="row">
-        <div class="col-12">
-            <h4 style="text-align:left">Last 5 Expenses</h4>
-            <p class="small" style="text-align:left"><a href="/fulltable">(view all expense history)</a></p>
-            <div class="table-responsive">
-                <table class="table table-hover table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">Index</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Payer</th>
-                            <th scope="col">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if data %}
-                        {% for i in data %}
-                        <tr>
-                            <td>{{i.id}}</td>
-                            <td>{{i.description}}</td>
-                            <td>{{i.category}}</td>
-                            <td>{{i.expense_date}}</td>
-                            <td>{{i.payer}}</td>
-                            <td>{{i.amount}}</td>
-                        </tr>
-                        {% endfor %}
-                        {% endif %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
     </main>
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

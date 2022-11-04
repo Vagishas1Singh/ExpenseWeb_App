@@ -12,7 +12,10 @@ nav .navbar-brand .orange
 }
 
 .navbar.bg-dark {
- background-color:#02B875 !important
+ background-color:#ff0084 !important
+ background: -webkit-linear-gradient(to left, #33001b, #ff0084);  /* Chrome 10-25, Safari 5.1-6 */
+ background: linear-gradient(to left, #33001b, #ff0084); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 main .form-control
