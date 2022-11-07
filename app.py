@@ -301,8 +301,6 @@ def login_validation():
         email = request.form.get('email')
         password = request.form.get('password')
         users = Users.query.filter_by(email=email).first()
-        # users = [users]
-        # print(users)
         if users!=None:
             for i in [users]:
                 if i.password == password:
@@ -312,7 +310,7 @@ def login_validation():
                     error = "Password is Wrong"
                     return render_template('login.html', error=error)
         else:
-            error = "User Not Exist..Please Register"
+            error = "User Not Exist.Please Register"
             return render_template('register.html', error=error)
 
 
