@@ -312,7 +312,7 @@ def login_validation():
                     error = "Password is Wrong"
                     return render_template('login.html', error=error)
         else:
-            error = "User Not exist"
+            error = "User Not Exist..Please Register"
             return render_template('register.html', error=error)
 
 
