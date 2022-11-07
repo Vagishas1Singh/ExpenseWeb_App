@@ -301,9 +301,10 @@ def login_validation():
         email = request.form.get('email')
         password = request.form.get('password')
         users = Users.query.filter_by(email=email).first()
-        users = [users]
-        if users:
-            for i in users:
+        # users = [users]
+        # print(users)
+        if users!=None:
+            for i in [users]:
                 if i.password == password:
                     session['user_id'] = i.id
                     return redirect('/home')
@@ -311,7 +312,8 @@ def login_validation():
                     error = "Password is Wrong"
                     return render_template('login.html', error=error)
         else:
-            return redirect('/register')
+            error = "User Not exist"
+            return render_template('register.html', error=error)
 
 
 @app.route("/logout")
@@ -329,3 +331,6 @@ if __name__ == "__main__":
         db.create_all()
     app.run(debug=True)  # if any changes done in the code then we need not to run the code again and again to see the
     # changes
+
+
+
