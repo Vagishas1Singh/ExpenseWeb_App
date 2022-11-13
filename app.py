@@ -47,11 +47,6 @@ class Expense(db.Model):
         return f"Expense('{self.id}','{self.description}','{self.category}','{self.user_id}')"
 
 
-# def create_session():
-#     Session = sessionmaker()
-#     Session.configure(bind=engine)
-#     session = Session()
-#     return session
 
 def login_required(test):
     @wraps(test)
