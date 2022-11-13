@@ -59,17 +59,17 @@ def login_required(test):
     return wrap
 
 
-@app.route('/')
+@app.route('/')                 #welcome page
 def welcome():
     return render_template('welcome.html')
 
 
-@app.route('/login')
+@app.route('/login')                 #login page
 def login():
     return render_template('login.html')
 
 
-@app.route('/register')
+@app.route('/register')          #registeration page
 def about():
     error = None
     return render_template('register.html', error=error)
