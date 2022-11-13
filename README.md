@@ -3,4 +3,4 @@ A Python Flask webframework based Expense Web App that can help you in adding yo
 Flask Web Framework,
 Python Backend,
 HTML,CSS,Chart.JS Frontend,
-SQLite Databse
+SQLite Database
